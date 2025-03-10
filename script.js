@@ -8,6 +8,7 @@ const volumeBar = document.querySelector('.volume-bar')
 const currentTime = document.querySelector('.time-elapsed')
 const duration = document.querySelector('.time-duration')
 const fullScreenBtn = document.querySelector('.fullscreen')
+const speed = document.querySelector('.player-speed')
 
 let lastVolume = 1
 
@@ -19,6 +20,7 @@ video.addEventListener('canplay', updateProgress)
 progressRange.addEventListener('click', setProgress)
 volumeRange.addEventListener('click', changeVolume)
 volumeIcon.addEventListener('click', toggleMute)
+speed.addEventListener('change', changeSpeed())
 
 function showPlayIcon() {
     playBtn.classList.replace('fa-pause', 'fa-play')
@@ -53,9 +55,6 @@ function setProgress(e) {
     progressBar.style.width = `${newTime * 100}%`
     video.currentTime = newTime * video.duration
 }
-
-
-
 
 function changeVolume(e) {
     let volume = e.offSetX / volumeRange.offsetWidth
@@ -92,6 +91,10 @@ function toggleMute() {
         volumeIcon.classList.add('fas', 'fa-volume-up')
         volumeIcon.setAttribute('title', 'Mute')
     }
+}
+
+function changeSpeed() {
+    video.playbackRate = speed.value
 }
 
 
