@@ -9,6 +9,12 @@ const currentTime = document.querySelector('.time-elapsed')
 const duration = document.querySelector('.time-duration')
 const fullScreenBtn = document.querySelector('.fullscreen')
 
+playBtn.addEventListener('click', togglePlay)
+video.addEventListener('click', togglePlay)
+video.addEventListener('ended', showPlayIcon)
+video.addEventListener('timeupdate', updateProgress)
+video.addEventListener('canplay', updateProgress)
+progressRange.addEventListener('click', setProgress)
 
 function showPlayIcon() {
     playBtn.classList.replace('fa-pause', 'fa-play')
@@ -38,8 +44,10 @@ function updateProgress() {
     duration.textContent = `${displayTime(video.duration)}`
 }
 
-playBtn.addEventListener('click', togglePlay)
-video.addEventListener('click', togglePlay)
-video.addEventListener('ended', showPlayIcon)
-video.addEventListener('timeupdate', updateProgress)
-video.addEventListener('canplay', updateProgress)
+function setProgress(e) {
+    const newTime = e.offsetX / progressRange.offsetWidth
+    progressBar.style.width = `${newTime * 100}%`
+    video.currentTime = newTime * video.duration
+}
+
+
