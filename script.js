@@ -102,13 +102,10 @@ function changeSpeed() {
 
 
 function toggleFullScreen() {
-    if(fullScreen) {
-        openFullscreen(player)
-    } else {
-        closeFullScreen()
-    }
+    !fullScreen ? openFullscreen(player) : closeFullScreen()
     fullScreen = !fullScreen
 }
+
 function openFullscreen(elem) {
     if(elem.requestFullscreen) {
         elem.requestFullscreen()
