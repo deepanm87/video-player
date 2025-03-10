@@ -1,3 +1,4 @@
+const player = document.querySelector('.player')
 const video = document.querySelector('video')
 const progressRange = document.querySelector('.progress-range')
 const progressBar = document.querySelector('.progress-bar')
@@ -11,6 +12,7 @@ const fullScreenBtn = document.querySelector('.fullscreen')
 const speed = document.querySelector('.player-speed')
 
 let lastVolume = 1
+let fullScreen = false
 
 playBtn.addEventListener('click', togglePlay)
 video.addEventListener('click', togglePlay)
@@ -20,7 +22,8 @@ video.addEventListener('canplay', updateProgress)
 progressRange.addEventListener('click', setProgress)
 volumeRange.addEventListener('click', changeVolume)
 volumeIcon.addEventListener('click', toggleMute)
-speed.addEventListener('change', changeSpeed())
+speed.addEventListener('change', changeSpeed)
+fullScreenBtn.addEventListener('click', toggleFullScreen)
 
 function showPlayIcon() {
     playBtn.classList.replace('fa-pause', 'fa-play')
@@ -95,6 +98,39 @@ function toggleMute() {
 
 function changeSpeed() {
     video.playbackRate = speed.value
+}
+
+
+function toggleFullScreen() {
+    if(fullScreen) {
+        openFullscreen(player)
+    } else {
+        closeFullScreen()
+    }
+    fullScreen = !fullScreen
+}
+function openFullscreen(elem) {
+    if(elem.requestFullscreen) {
+        elem.requestFullscreen()
+    } else if(elem.mozRequestFullscreen) {
+        elem.mozRequestFullScreen()
+    } else if(elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen()
+    } else if(elem.msRequestFullscreen) {
+        elem.msRequestFullScreen()
+    }
+    video.classList.add('video-fullscreen')
+}
+
+function closeFullScreen() {
+    if(document.exitFullscreen) {
+        document.exitFullscreen()
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen()
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen()
+    }
+    video.classList.remove('video-fullscreen')
 }
 
 
